@@ -20,6 +20,9 @@ label_puntos.pack(pady=10)
 label_feedback = ctk.CTkLabel(ventana_juego1, text="Selecciona la opccion correcta", font=("Arial", 18))
 label_feedback.pack(pady=5)
 
+label_racha = ctk.CTkLabel(ventana_juego1, text="Intenta marcar una racha y no equivocarte!", font=("Arial", 14))
+label_racha.pack(pady=5)
+
 
 # funcion que muestra la imagen que se genero (se ejecuta solamente, pero no retorna nada)
 def establecer_juego(label_visor)->str:
@@ -75,16 +78,19 @@ def nueva_ronda():
             command=lambda l=letra_boton: verificar_respuesta(l, correcta)
         )
 
-
+racha = 0
 puntos = 0
 
 def verificar_respuesta(letra_seleccionada, letra_correcta):
     global puntos # Para poder modificar la variable de afuera
+    global racha
     
     if letra_seleccionada == letra_correcta:
         puntos += 10
         label_puntos.configure(text=f"Puntos: {puntos}")
         label_feedback.configure(text=f"¡Correcto! Efectivamente esa es la '{letra_correcta.upper()}'", text_color="green")
+        racha += 1
+        label_racha.configure(text=f"Tu racha es de: '{racha}' puntos", text_color="green")
         # Al acertar, se inicia automaticamente la siguiente ronda
         nueva_ronda()
 
@@ -93,6 +99,9 @@ def verificar_respuesta(letra_seleccionada, letra_correcta):
             puntos -= 10
         label_puntos.configure(text=f"Puntos: {puntos}")
         label_feedback.configure(text=f"Esa no es, la correcta era la '{letra_correcta.upper()}'", text_color="red")
+        if racha != 0:
+            label_racha.configure(text=f"Has perdido tu racha, intenta hacer una mas grande y no falles!", text_color="red")
+            racha = 0
         nueva_ronda()
 
 # -------------------------------------------------------------------------------------------------
