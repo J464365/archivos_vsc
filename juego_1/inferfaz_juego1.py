@@ -16,10 +16,28 @@ ventana_juego1.title("Visor de Señas Aleatorio")
 label_puntos = ctk.CTkLabel(ventana_juego1, text="Puntos: 0", font=("Arial", 18, "bold"))
 label_puntos.pack(pady=10)
 
+
+# funcion que muestra la imagen que se genero (se ejecuta solamente, pero no retorna nada)
+def actualizar_imagen(label_donde_mostrar)->None:
+    imagen_generada = l1.choise_image()
+    
+    # se procesa la imagen con pillow
+    img_pil = Image.open(imagen_generada)
+    # ajuste de tamaño
+    img_ajustada = ctk.CTkImage(light_image=img_pil, size=(250, 250))
+    # se actualiza el widget que ya existe
+    label_donde_mostrar.configure(image=img_ajustada, text="")
+    # evita que python borre la imagen de la ram
+    label_donde_mostrar.image = img_ajustada
+
 # Label para los mensajes (Correcto/Incorrecto)
 label_feedback = ctk.CTkLabel(ventana_juego1, text="Selecciona la opccion correcta", font=("Arial", 18))
 label_feedback.pack(pady=5)
 
+ventana_juego1 = ctk.CTk()
+ventana_juego1.geometry("400x450")
+ventana_juego1.title("Visor de Señas Aleatorio")
+# abajo de la creacion de la ventana se pueden definir otras caracteristicas como la dimension de la ventana, los colores, elementos. etc.
 
 # funcion que muestra la imagen que se genero (se ejecuta solamente, pero no retorna nada)
 def establecer_juego(label_visor)->str:
@@ -108,6 +126,8 @@ for i in range(4):
     btn = ctk.CTkButton(frame_btns, text="", width=150, height=200)
     btn.pack(side="left", padx=5)
     botones.append(btn)
+# Ejecuta el programa hasta que el usuario lo cierre
+ventana_juego1.mainloop()
 
 nueva_ronda()
 
