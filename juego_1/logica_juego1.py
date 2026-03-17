@@ -28,4 +28,6 @@ def choise_image()->str:
 # guarda la ruta de la imagen en una variable
 ruta_imagen_escojida = choise_image()
 
-print(ruta_imagen_escojida)
+
+
+
